@@ -8,28 +8,37 @@
     </head>
     <body>
         <div class="main container_12">
-            <h1 class="logo">Littlepony</h1>
-            <table class="panel">
-                <thead>
-                    <tr>
-                        <th>URL</th>
-                        <th>Description</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for example in urlexamples %}
-                    <tr class="entry">
-                        <td><div class="hole">{{example.url}}</div></td>
-                        <td><div class="hole">{{example.description}}</div></td>
-                        <td class="controls"><a href="{{example.url}}" class="button goto-button">Open</a>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                <tfoot>
-                    <tr><td colspan="2"></td></tr>
-                </tfoot>
-            </table>
+            <div class="grid_12">
+                <h1 class="logo">Littlepony</h1>
+                <table class="panel">
+                    <thead>
+                        <tr>
+                            <th>URL</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for example in urlexamples %}
+                        <tr class="entry">
+                            <td><div class="hole">{{example.url}}</div></td>
+                            <td><div class="hole">{{example.description}}</div></td>
+                            <td class="controls"><a href="{{example.url}}" class="button goto-button">Open</a>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr><td colspan="2"></td></tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="clear"></div>
+            <div class="grid_12">
+                <div class="footer">
+                    <span>little pony is one of the projects of </span><a href="http://www.marcelbeumer.com" class="marcel"><span>Marcel Beumer</span></a>
+                </div>
+            </div>
+            <div class="clear"></div>
         </div>
     </body>
 </html>
