@@ -1,0 +1,11 @@
+{% load my_tags %}<!DOCTYPE html>
+<html>
+    <head>
+        <title>xx</title>
+        <!--<script src="{{MEDIA_URL}}js/test.js"/>-->
+    </head>
+    <body>
+        <a href="{% url json_page 'test' 'sample' %}">test</a>
+        <div>json: {{key.prop}}</div>
+    </body>
+</html>

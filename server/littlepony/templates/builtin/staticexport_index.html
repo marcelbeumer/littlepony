@@ -1,0 +1,27 @@
+{% load my_tags %}<!DOCTYPE html>
+<html>
+    <head>
+        <!--<script src="{{MEDIA_URL}}js/test.js"/>-->
+    </head>
+    <body>
+        <h2>Sitemap</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>URL</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for s in statics %}
+                <tr>
+                    <td><a href="{{s.filename}}">{{s.filename}}</a></td>
+                    <td>{{s.url}}</td>
+                    <td><a href="{{s.filename}}">{{s.description}}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

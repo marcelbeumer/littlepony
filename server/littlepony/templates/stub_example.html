@@ -1,0 +1,13 @@
+{% load my_tags %}{% load localeurl_tags %}
+
+hallo
+
+{% xxx %}
+
+<a href="{% url shop_index a b c %}" class="{{'__special'|replace_special_css_class}}">Shop index for a, b, c</a>
+
+{{'xxx'|special}}
+
+{% startspecial %}
+hallo
+{% endspecial %}

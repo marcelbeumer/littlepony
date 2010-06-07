@@ -1,0 +1,26 @@
+{% load my_tags %}<!DOCTYPE html>
+<html>
+    <head>
+        <title>xx</title>
+    </head>
+    <body>
+        <h1>Littlepony</h1>
+        <h2>Sitemap</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>URL</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for example in urlexamples %}
+                <tr>
+                    <td>{% if example.url != '' %}<a href="{{example.url}}">{{example.url}}</a>{% endif %}</td>
+                    <td><a href="{{example.url}}">{{example.description}}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
