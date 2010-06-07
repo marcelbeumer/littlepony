@@ -32,22 +32,24 @@ background-image: -moz-linear-gradient(top, rgb(54,54,54), rgb(46,46,46));}
     background-image: -webkit-gradient(linear, center top, center bottom, from(rgb(35, 35, 35)), to(rgb(46, 46, 46))); background-repeat: initial; background-attachment: initial; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: initial; background-position: initial initial;
     background-image: -moz-linear-gradient(top, rgb(30,30,30), rgb(46,46,46));
 }
-.valid{width:1px;}
-.validation{
-background: #222 url(/images/alert-overlay.png) repeat-x;
-width:20px;
+
+td.controls{width:1px;}
+.button{
+background: #222 url(/media/builtin/images/go-button.png) repeat-x;
 display: inline-block;
 padding: 5px 10px 6px;
 color: #fff;
 text-decoration: none;
 line-height: 1;
-text-indent:-5000px;
 -moz-border-radius: 5px;
 -webkit-border-radius: 5px;
 -moz-box-shadow: 0px 0px 5px #555;
 -webkit-box-shadow: 0px 0px 5px #555;
 text-shadow: 0 -1px 1px #222;
-border-bottom: 1px solid #222;
+xborder-bottom: 1px solid #222;
 position: relative;
 cursor: pointer;
 }
+
+a.button{text-decoration:none;}
+.goto-button{border:1px solid #363636;text-shadow:0 -1px 1px #354d86;}

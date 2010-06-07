@@ -14,15 +14,15 @@
                     <tr>
                         <th>URL</th>
                         <th>Description</th>
-                        <th>Valid</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for example in urlexamples %}
                     <tr class="entry">
-                        <td><div class="hole">{% if example.url != '' %}<a href="{{example.url}}">{{example.url}}</a>{% endif %}</div></td>
-                        <td><div class="hole"><a href="{{example.url}}">{{example.description}}</a></div></td>
-                        <td class="valid"><div class="validation validation-valid">valid</div>
+                        <td><div class="hole">{{example.url}}</div></td>
+                        <td><div class="hole">{{example.description}}</div></td>
+                        <td class="controls"><a href="{{example.url}}" class="button goto-button">Open</a>
                     </tr>
                 {% endfor %}
                 </tbody>
