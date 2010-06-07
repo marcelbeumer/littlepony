@@ -18,12 +18,16 @@ urlpatterns += patterns('littlepony.views',
 # setup to serve static files
 urlpatterns += patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-        'document_root': os.path.join(settings.ROOT_PATH, 'littlepony/media'),
+        'document_root': os.path.join(settings.ROOT_PATH, 'media'),
     })
 )
 
 # YOUR url examples. Will be used to generate static exports and render the index.
 # Just a few examples below based on the example urlpatterns
 urlexamples = (
+    urlexample('/test/sample/', description="Test page for json databinding"),
+    urlexample('/test/sample/', description="Test page for json databinding"),
+    urlexample('/test/sample/', description="Test page for json databinding"),
+    urlexample('/test/sample/', description="Test page for json databinding"),
     urlexample('/test/sample/', description="Test page for json databinding"),
 )

@@ -1,0 +1,55 @@
+/* main bg: 41584e */
+
+html{height:100%;} /* xxx: safe? */
+body{color:#000;background-color:#fff;height:100%;} /* darker: 20342f */
+body, pre{font-size: 13px;line-height:1.5em;font-family: "HelveticaNeue-Light", 'Helvetica Neue Light', 'Helvetica Neue', Arial, sans-serif;font-weight:300;}
+a, a:hover, a:visited{color:#425AAA;text-decoration:underline;}
+
+h1{font-size:3em;color:#000;margin-bottom:40px;}
+h3{font-size:2.5em;color:#000;margin-bottom:20px;}
+h4{font-size:1.7em;color:#000;margin-bottom:20px;font-weight:normal;}
+.clear{clear:both;font-size:0;text-indent:-3000px;}
+
+p{margin-bottom:10px;}
+strong{font-weight:bold;}
+
+.logo{display:block;text-indent:-5000px;width:314px;height:124px;margin:0 0 20px 0;}
+.logo{background:url('/media/builtin/images/logo.png') 0 0 no-repeat;}
+
+.main{position:relative;}
+
+.panel{background-color:#353537;color:#fff;width:100%;}
+.panel a{color:#fff;}
+.panel{-webkit-border-radius:10px;-moz-border-radius:10px;}
+.panel{-webkit-box-shadow: 0 0 px #242424;}
+.panel td, .panel th{padding:10px;text-align:left;}
+.panel tr.entry{/*363636, 222424*/
+background-image: -webkit-gradient(linear, center top, center bottom, from(rgb(54, 54, 54)), to(rgb(46, 46, 46))); background-repeat: initial; background-attachment: initial; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: initial; background-position: initial initial;
+background-image: -moz-linear-gradient(top, rgb(54,54,54), rgb(46,46,46));}
+.panel thead tr{border-bottom:1px solid #413F3F;}
+.panel tr.entry{border-top:1px solid #413F3F;}
+
+.hole{
+    padding:5px 10px;
+    background-image: -webkit-gradient(linear, center top, center bottom, from(rgb(35, 35, 35)), to(rgb(46, 46, 46))); background-repeat: initial; background-attachment: initial; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: initial; background-position: initial initial;
+    background-image: -moz-linear-gradient(top, rgb(30,30,30), rgb(46,46,46));
+}
+.valid{width:1px;}
+.validation{
+background: #222 url(/images/alert-overlay.png) repeat-x;
+width:20px;
+display: inline-block;
+padding: 5px 10px 6px;
+color: #fff;
+text-decoration: none;
+line-height: 1;
+text-indent:-5000px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-moz-box-shadow: 0px 0px 5px #555;
+-webkit-box-shadow: 0px 0px 5px #555;
+text-shadow: 0 -1px 1px #222;
+border-bottom: 1px solid #222;
+position: relative;
+cursor: pointer;
+}
