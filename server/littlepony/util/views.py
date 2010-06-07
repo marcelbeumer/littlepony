@@ -14,7 +14,8 @@ def get_template(name):
     
 def load_json(jsonfile):
     from django.conf import settings
-    import os, json
+    from django.utils import simplejson as json
+    import os
     path = getattr(settings, 'VIEWDATA_PATH', False)
     if not path: raise Exception("settings.VIEWDATA_PATH not set")
     f = open(os.path.join(path, jsonfile), 'r')
@@ -31,6 +32,9 @@ def index(request):
     urlconf = get_urlconf()
     viewdata = {'urlexamples' : urlconf.urlexamples}
     return render_to_response(request, "builtin/index.html", viewdata=viewdata)
+
+def manual(request):
+    return render_to_response(request, "builtin/manual.html")
 
 # patch Django url reverse
 _django_reverse = None

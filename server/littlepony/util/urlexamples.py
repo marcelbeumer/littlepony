@@ -21,6 +21,10 @@ def export_static():
     c = Client()
     urlconf = get_urlconf()
     for example in urlconf.urlexamples:
+        
+        if example.get('noexport', False):
+            continue
+            
         url = example['url']
         description = ""
         if example.has_key('description'):

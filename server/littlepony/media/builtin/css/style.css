@@ -16,6 +16,10 @@ strong{font-weight:bold;}
 
 .main{position:relative;}
 
+.header{padding:10px 0;margin-bottom:40px;border-bottom:1px dashed #363636;}
+.logo-small{display:block;text-indent:-5000px;width:150px;height:64px;margin:0;}
+.logo-small{background:url('/media/builtin/images/logo-small.png') 0 0px no-repeat;}
+
 .panel{background-color:#353537;color:#fff;width:100%;}
 .panel a{color:#fff;}
 .panel{-webkit-border-radius:10px;-moz-border-radius:10px;}

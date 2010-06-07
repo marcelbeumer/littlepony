@@ -5,7 +5,8 @@ import os
 
 # standard littlepony index page
 urlpatterns = patterns('littlepony.util.views',
-    url(r'^$', 'index'),
+    url(r'^$', 'index', name="littlepony_index"),
+    url(r'^manual/$', 'manual', name="littlepony_manual"),
 )
 
 # YOUR views, just a few examples below
@@ -25,6 +26,8 @@ urlpatterns += patterns('',
 # YOUR url examples. Will be used to generate static exports and render the index.
 # Just a few examples below based on the example urlpatterns
 urlexamples = (
+    urlexample('/manual/', description="The little pony manual", noexport=True),
+    urlexample('/media/builtin/docs/django_docs-1.2/index.html', description="The official Django 1.2 documentation", noexport=True),
     urlexample('/test/sample/', description="Test page for json databinding"),
     urlexample('/test/sample/', description="Test page for json databinding"),
     urlexample('/test/sample/', description="Test page for json databinding"),

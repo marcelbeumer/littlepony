@@ -1,44 +1,29 @@
-{% load my_tags %}<!DOCTYPE html>
-<html>
-    <head>
-        <title>little pony</title>
-        <link rel="stylesheet" href="{{MEDIA_URL}}builtin/css/reset.css" type="text/css"/>
-        <link rel="stylesheet" href="{{MEDIA_URL}}builtin/css/grids.css" type="text/css"/>
-        <link rel="stylesheet" href="{{MEDIA_URL}}builtin/css/style.css" type="text/css"/>
-    </head>
-    <body>
-        <div class="main container_12">
-            <div class="grid_12">
-                <h1 class="logo">Littlepony</h1>
-                <table class="panel">
-                    <thead>
-                        <tr>
-                            <th>URL</th>
-                            <th>Description</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for example in urlexamples %}
-                        <tr class="entry">
-                            <td><div class="hole">{{example.url}}</div></td>
-                            <td><div class="hole">{{example.description}}</div></td>
-                            <td class="controls"><a href="{{example.url}}" class="button goto-button">Open</a>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                    <tfoot>
-                        <tr><td colspan="2"></td></tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="clear"></div>
-            <div class="grid_12">
-                <div class="footer">
-                    <span>little pony is one of the projects of </span><a href="http://www.marcelbeumer.com" class="marcel"><span>Marcel Beumer</span></a>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
-    </body>
-</html>
+{% extends "builtin/base.html" %}
+{% block header %}{% endblock %}
+{% block content %}
+<div class="grid_12">
+    <h1 class="logo">little pony</h1>
+    <table class="panel">
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for example in urlexamples %}
+            <tr class="entry">
+                <td><div class="hole">{{example.url}}</div></td>
+                <td><div class="hole">{{example.description}}</div></td>
+                <td class="controls"><a href="{{example.url}}" class="button goto-button">Open</a>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr><td colspan="2"></td></tr>
+        </tfoot>
+    </table>
+</div>
+<div class="clear"></div>
+{% endblock %}

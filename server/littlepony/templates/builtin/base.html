@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %} little pony</title>
+        <link rel="stylesheet" href="{{MEDIA_URL}}builtin/css/reset.css" type="text/css"/>
+        <link rel="stylesheet" href="{{MEDIA_URL}}builtin/css/grids.css" type="text/css"/>
+        <link rel="stylesheet" href="{{MEDIA_URL}}builtin/css/style.css" type="text/css"/>
+    </head>
+    <body>
+        <div class="main container_12">
+            {% block header %}
+            <div class="grid_12">
+                <div class="header">
+                    <a href="{% url littlepony_index %}"><h1 class="logo-small">little pony</h1></a>
+                </div>
+            </div>
+            {% endblock %}
+            <div class="clear"></div>
+            {% block content %}
+            {% endblock %}
+            <div class="grid_12">
+                <div class="footer">
+                    <span>little pony is one of the projects of </span><a href="http://www.marcelbeumer.com" class="marcel"><span>Marcel Beumer</span></a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </body>
+</html>

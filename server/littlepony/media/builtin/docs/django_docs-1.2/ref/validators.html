@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Validators &mdash; Django v1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django v1.1 documentation" href="../index.html" />
+    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="next" title="Meta-documentation and miscellany" href="../misc/index.html" />
+    <link rel="prev" title="Django Utils" href="utils.html" />
+ 
+<script type="text/javascript" src="../templatebuiltins.js"></script>
+<script type="text/javascript">
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);
+</script>
+
+  </head>
+  <body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django v1.1 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="utils.html" title="Django Utils">previous</a> 
+     |
+    <a href="index.html" title="API Reference" accesskey="U">up</a>
+   |
+    <a href="../misc/index.html" title="Meta-documentation and miscellany">next</a> &raquo;</div>
+    </div>
+    
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="ref-validators">
+            
+  <div class="section" id="s-validators">
+<span id="s-ref-validators"></span><span id="validators"></span><span id="ref-validators"></span><h1>Validators<a class="headerlink" href="#validators" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<span class="title">New in Django Development version.</span> </div>
+<div class="section" id="s-writing-validators">
+<span id="writing-validators"></span><h2>Writing validators<a class="headerlink" href="#writing-validators" title="Permalink to this headline">¶</a></h2>
+<p>A validator is a callable that takes a value and raises a
+<tt class="docutils literal"><span class="pre">ValidationError</span></tt> if it doesn&#8217;t meet some criteria. Validators can be useful
+for re-using validation logic between different types of fields.</p>
+<p>For example, here&#8217;s a validator that only allows even numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+
+<span class="k">def</span> <span class="nf">validate_even</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s">u&#39;</span><span class="si">%s</span><span class="s"> is not an even number&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can add this to a model field via the field's <tt class="docutils literal"><span class="pre">validators</span></tt>
+argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">even_field</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_even</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Because values are converted to Python before validators are run, you can even
+use the same validator with forms:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">MyForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">even_field</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_even</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-how-validators-are-run">
+<span id="how-validators-are-run"></span><h2>How validators are run<a class="headerlink" href="#how-validators-are-run" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference external" href="forms/validation.html#ref-forms-validation"><em>form validation</em></a> for more information on
+how validators are run in forms, and <a class="reference external" href="models/instances.html#validating-objects"><em>Validating objects</em></a> for how they're run in models. Note that validators will
+not be run automatically when you save a model, but if you are using a
+<tt class="docutils literal"><span class="pre">ModelForm</span></tt>, it will run your validators on any fields that are included in
+your form. See the <a class="reference external" href="../topics/forms/modelforms.html#topics-forms-modelforms"><em>ModelForm documentation</em></a>
+for information on how model validation interacts with forms.</p>
+</div>
+<div class="section" id="s-built-in-validators">
+<span id="built-in-validators"></span><h2>Built-in validators<a class="headerlink" href="#built-in-validators" title="Permalink to this headline">¶</a></h2>
+<p>Django has a collection of callable validators for use with model and form
+fields. They're used internally but are available for use with your own fields,
+too. They can be used in addition to, or in lieu of custom <tt class="docutils literal"><span class="pre">field.clean()</span></tt>
+methods.</p>
+<div class="section" id="s-regexvalidator">
+<span id="regexvalidator"></span><h3><tt class="docutils literal"><span class="pre">RegexValidator</span></tt><a class="headerlink" href="#regexvalidator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="RegexValidator">
+<em class="property">class </em><tt class="descname">RegexValidator</tt>(<em>regex</em>, <em>message=None</em>, <em>code=None</em>)<a class="headerlink" href="#RegexValidator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regex">
+<tt class="descname">regex</tt><a class="headerlink" href="#regex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The regular expression pattern to search for the provided <tt class="docutils literal"><span class="pre">value</span></tt>,
+or a pre-compiled regular expression. Raises a <tt class="docutils literal"><span class="pre">ValidationError</span></tt>
+with <tt class="docutils literal"><span class="pre">message</span></tt> and <tt class="docutils literal"><span class="pre">code</span></tt> if no match is found.</p>
+<dl class="attribute">
+<dt>
+<tt class="descname">message=None</tt></dt>
+<dd></dd></dl>
+
+<p>The error message used by <tt class="docutils literal"><span class="pre">ValidationError</span></tt> if validation fails. If no
+<tt class="docutils literal"><span class="pre">message</span></tt> is specified, a generic <tt class="docutils literal"><span class="pre">&quot;Enter</span> <span class="pre">a</span> <span class="pre">valid</span> <span class="pre">value&quot;</span></tt> message is used.</p>
+<dl class="attribute">
+<dt>
+<tt class="descname">code=None</tt></dt>
+<dd></dd></dl>
+
+<p>The error code used by <tt class="docutils literal"><span class="pre">ValidationError</span></tt> if validation fails. If <tt class="docutils literal"><span class="pre">code</span></tt>
+is not specified, <tt class="docutils literal"><span class="pre">&quot;invalid&quot;</span></tt> is used.</p>
+</div>
+<div class="section" id="s-urlvalidator">
+<span id="urlvalidator"></span><h3><tt class="docutils literal"><span class="pre">URLValidator</span></tt><a class="headerlink" href="#urlvalidator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="URLValidator">
+<em class="property">class </em><tt class="descname">URLValidator</tt>(<em>verify_exists=False</em>, <em>validator_user_agent=URL_VALIDATOR_USER_AGENT</em>)<a class="headerlink" href="#URLValidator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A <tt class="docutils literal"><span class="pre">RegexValidator</span></tt> that ensures a value looks like a URL and optionally
+verifies that the URL actually exists (i.e., doesn't return a 404 status code).
+Raises an error code of <tt class="docutils literal"><span class="pre">'invalid'</span></tt> if it doesn't look like a URL, and a code
+of <tt class="docutils literal"><span class="pre">'invalid_link'</span></tt> if it doesn't exist.</p>
+<dl class="attribute">
+<dt>
+<tt class="descname">verify_exists=False</tt></dt>
+<dd></dd></dl>
+
+<p>If <tt class="docutils literal"><span class="pre">verify_exists</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, this validator checks that the URL actually
+exists.</p>
+<dl class="attribute">
+<dt>
+<tt class="descname">validator_user_agent=URL_VALIDATOR_USER_AGENT</tt></dt>
+<dd></dd></dl>
+
+<p>If <tt class="docutils literal"><span class="pre">verify_exists</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, it uses <tt class="docutils literal"><span class="pre">validator_user_agent</span></tt> as the &quot;User-agent&quot;
+for the request. This defaults to <tt class="docutils literal"><span class="pre">settings.URL_VALIDATOR_USER_AGENT</span></tt>.</p>
+</div>
+<div class="section" id="s-validate-email">
+<span id="validate-email"></span><h3><tt class="docutils literal"><span class="pre">validate_email</span></tt><a class="headerlink" href="#validate-email" title="Permalink to this headline">¶</a></h3>
+<p>A <tt class="docutils literal"><span class="pre">RegexValidator</span></tt> instance that ensures a value looks like an e-mail address.</p>
+</div>
+<div class="section" id="s-validate-slug">
+<span id="validate-slug"></span><h3><tt class="docutils literal"><span class="pre">validate_slug</span></tt><a class="headerlink" href="#validate-slug" title="Permalink to this headline">¶</a></h3>
+<p>A <tt class="docutils literal"><span class="pre">RegexValidator</span></tt> instance that ensures a value consists of only letters,
+numbers, underscores or hyphens.</p>
+</div>
+<div class="section" id="s-validate-ipv4-address">
+<span id="validate-ipv4-address"></span><h3><tt class="docutils literal"><span class="pre">validate_ipv4_address</span></tt><a class="headerlink" href="#validate-ipv4-address" title="Permalink to this headline">¶</a></h3>
+<p>A <tt class="docutils literal"><span class="pre">RegexValidator</span></tt> instance that ensures a value looks like an IPv4 address.</p>
+</div>
+<div class="section" id="s-validate-comma-separated-integer-list">
+<span id="validate-comma-separated-integer-list"></span><h3><tt class="docutils literal"><span class="pre">validate_comma_separated_integer_list</span></tt><a class="headerlink" href="#validate-comma-separated-integer-list" title="Permalink to this headline">¶</a></h3>
+<p>A <tt class="docutils literal"><span class="pre">RegexValidator</span></tt> instance that ensures a value is a comma-separated list
+of integers.</p>
+</div>
+<div class="section" id="s-maxvaluevalidator">
+<span id="maxvaluevalidator"></span><h3><tt class="docutils literal"><span class="pre">MaxValueValidator</span></tt><a class="headerlink" href="#maxvaluevalidator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="MaxValueValidator">
+<em class="property">class </em><tt class="descname">MaxValueValidator</tt>(<em>max_value</em>)<a class="headerlink" href="#MaxValueValidator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Raises a <tt class="docutils literal"><span class="pre">ValidationError</span></tt> with a code of <tt class="docutils literal"><span class="pre">'max_value'</span></tt> if <tt class="docutils literal"><span class="pre">value</span></tt> is
+greater than <tt class="docutils literal"><span class="pre">max_value</span></tt>.</p>
+</div>
+<div class="section" id="s-minvaluevalidator">
+<span id="minvaluevalidator"></span><h3><tt class="docutils literal"><span class="pre">MinValueValidator</span></tt><a class="headerlink" href="#minvaluevalidator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="MinValueValidator">
+<em class="property">class </em><tt class="descname">MinValueValidator</tt>(<em>min_value</em>)<a class="headerlink" href="#MinValueValidator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Raises a <tt class="docutils literal"><span class="pre">ValidationError</span></tt> with a code of <tt class="docutils literal"><span class="pre">'min_value'</span></tt> if <tt class="docutils literal"><span class="pre">value</span></tt> is
+less than <tt class="docutils literal"><span class="pre">min_value</span></tt>.</p>
+</div>
+<div class="section" id="s-maxlengthvalidator">
+<span id="maxlengthvalidator"></span><h3><tt class="docutils literal"><span class="pre">MaxLengthValidator</span></tt><a class="headerlink" href="#maxlengthvalidator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="MaxLengthValidator">
+<em class="property">class </em><tt class="descname">MaxLengthValidator</tt>(<em>max_length</em>)<a class="headerlink" href="#MaxLengthValidator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Raises a <tt class="docutils literal"><span class="pre">ValidationError</span></tt> with a code of <tt class="docutils literal"><span class="pre">'max_length'</span></tt> if the length of
+<tt class="docutils literal"><span class="pre">value</span></tt> is greater than <tt class="docutils literal"><span class="pre">max_length</span></tt>.</p>
+</div>
+<div class="section" id="s-minlengthvalidator">
+<span id="minlengthvalidator"></span><h3><tt class="docutils literal"><span class="pre">MinLengthValidator</span></tt><a class="headerlink" href="#minlengthvalidator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="MinLengthValidator">
+<em class="property">class </em><tt class="descname">MinLengthValidator</tt>(<em>min_length</em>)<a class="headerlink" href="#MinLengthValidator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Raises a <tt class="docutils literal"><span class="pre">ValidationError</span></tt> with a code of <tt class="docutils literal"><span class="pre">'min_length'</span></tt> if the length of
+<tt class="docutils literal"><span class="pre">value</span></tt> is less than <tt class="docutils literal"><span class="pre">min_length</span></tt>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>         
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Validators</a><ul>
+<li><a class="reference external" href="#writing-validators">Writing validators</a></li>
+<li><a class="reference external" href="#how-validators-are-run">How validators are run</a></li>
+<li><a class="reference external" href="#built-in-validators">Built-in validators</a><ul>
+<li><a class="reference external" href="#regexvalidator"><tt class="docutils literal"><span class="pre">RegexValidator</span></tt></a></li>
+<li><a class="reference external" href="#urlvalidator"><tt class="docutils literal"><span class="pre">URLValidator</span></tt></a></li>
+<li><a class="reference external" href="#validate-email"><tt class="docutils literal"><span class="pre">validate_email</span></tt></a></li>
+<li><a class="reference external" href="#validate-slug"><tt class="docutils literal"><span class="pre">validate_slug</span></tt></a></li>
+<li><a class="reference external" href="#validate-ipv4-address"><tt class="docutils literal"><span class="pre">validate_ipv4_address</span></tt></a></li>
+<li><a class="reference external" href="#validate-comma-separated-integer-list"><tt class="docutils literal"><span class="pre">validate_comma_separated_integer_list</span></tt></a></li>
+<li><a class="reference external" href="#maxvaluevalidator"><tt class="docutils literal"><span class="pre">MaxValueValidator</span></tt></a></li>
+<li><a class="reference external" href="#minvaluevalidator"><tt class="docutils literal"><span class="pre">MinValueValidator</span></tt></a></li>
+<li><a class="reference external" href="#maxlengthvalidator"><tt class="docutils literal"><span class="pre">MaxLengthValidator</span></tt></a></li>
+<li><a class="reference external" href="#minlengthvalidator"><tt class="docutils literal"><span class="pre">MinLengthValidator</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>Browse</h3>
+  <ul>
+    
+      <li>Prev: <a href="utils.html">Django Utils</a></li>
+    
+    
+      <li>Next: <a href="../misc/index.html">Meta-documentation and miscellany</a></li>
+    
+  </ul>
+  <h3>You are here:</h3>
+  <ul>
+      <li>
+        <a href="../index.html">Django v1.1 documentation</a>
+        
+          <ul><li><a href="index.html">API Reference</a>
+        
+        <ul><li>Validators</li></ul>
+        </li></ul>
+      </li>
+  </ul>  
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/ref/validators.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">May 21, 2010</p>
+          </div> 
+        
+      
+    </div>
+    
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="utils.html" title="Django Utils">previous</a> 
+     |
+    <a href="index.html" title="API Reference" accesskey="U">up</a>
+   |
+    <a href="../misc/index.html" title="Meta-documentation and miscellany">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>
