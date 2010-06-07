@@ -1,6 +1,4 @@
 /* main bg: 41584e */
-
-html{height:100%;} /* xxx: safe? */
 body{color:#000;background-color:#fff;height:100%;} /* darker: 20342f */
 body, pre{font-size: 13px;line-height:1.5em;font-family: "HelveticaNeue-Light", 'Helvetica Neue Light', 'Helvetica Neue', Arial, sans-serif;font-weight:300;}
 a, a:hover, a:visited{color:#425AAA;text-decoration:underline;}
@@ -13,7 +11,7 @@ h4{font-size:1.7em;color:#000;margin-bottom:20px;font-weight:normal;}
 p{margin-bottom:10px;}
 strong{font-weight:bold;}
 
-.logo{display:block;text-indent:-5000px;width:314px;height:124px;margin:0 0 20px 0;}
+.logo{display:block;text-indent:-5000px;width:314px;height:124px;margin:20px 0 20px 0;}
 .logo{background:url('/media/builtin/images/logo.png') 0 0 no-repeat;}
 
 .main{position:relative;}
