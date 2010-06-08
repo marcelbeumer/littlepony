@@ -8,7 +8,8 @@
             <tr>
                 <th>URL</th>
                 <th>Description</th>
-                <th></th>
+                <th>Export</th>
+                <th>Link</th>
             </tr>
         </thead>
         <tbody>
@@ -16,12 +17,13 @@
             <tr class="entry">
                 <td><div class="hole">{{example.url}}</div></td>
                 <td><div class="hole">{{example.description}}</div></td>
-                <td class="controls"><a href="{{example.url}}" class="button goto-button">Open</a>
+                <td class="controls"><div class="export{% if example.noexport %} no-export{% endif %}"></div></td>
+                <td class="controls"><a href="{{example.url}}" class="button goto-button">See</a>
             </tr>
         {% endfor %}
         </tbody>
         <tfoot>
-            <tr><td colspan="2"></td></tr>
+            <tr><td colspan="3"></td></tr>
         </tfoot>
     </table>
 </div>
