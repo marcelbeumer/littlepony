@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import sys, os
-from django.core.management import execute_manager
 
 sys.path.append(os.path.dirname(__file__))
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
+
+from django.core.management import execute_manager
 
 try:
     import littlepony.settings as settings # Assumed to be in the same directory.
