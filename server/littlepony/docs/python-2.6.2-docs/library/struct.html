@@ -1,0 +1,504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.3. struct — Interpret strings as packed binary data &mdash; Python v2.6.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Python v2.6.2 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python v2.6.2 documentation" href="../index.html" />
+    <link rel="up" title="8. String Services" href="strings.html" />
+    <link rel="next" title="8.4. difflib — Helpers for computing deltas" href="difflib.html" />
+    <link rel="prev" title="8.2. re — Regular expression operations" href="re.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="difflib.html" title="8.4. difflib — Helpers for computing deltas"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="re.html" title="8.2. re — Regular expression operations"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="strings.html" accesskey="U">8. String Services</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-struct">
+<h1>8.3. <tt class="xref docutils literal"><span class="pre">struct</span></tt> &#8212; Interpret strings as packed binary data<a class="headerlink" href="#module-struct" title="Permalink to this headline">¶</a></h1>
+<p id="index-612">This module performs conversions between Python values and C structs represented
+as Python strings.  It uses <em>format strings</em> (explained below) as compact
+descriptions of the lay-out of the C structs and the intended conversion to/from
+Python values.  This can be used in handling binary data stored in files or from
+network connections, among other sources.</p>
+<p>The module defines the following exception and functions:</p>
+<dl class="exception">
+<dt id="struct.error">
+<em class="property">
+exception </em><tt class="descclassname">struct.</tt><tt class="descname">error</tt><a class="headerlink" href="#struct.error" title="Permalink to this definition">¶</a></dt>
+<dd>Exception raised on various occasions; argument is a string describing what is
+wrong.</dd></dl>
+
+<dl class="function">
+<dt id="struct.pack">
+<tt class="descclassname">struct.</tt><tt class="descname">pack</tt><big>(</big><em>fmt</em>, <em>v1</em>, <em>v2</em>, <em>...</em><big>)</big><a class="headerlink" href="#struct.pack" title="Permalink to this definition">¶</a></dt>
+<dd>Return a string containing the values <tt class="docutils literal"><span class="pre">v1,</span> <span class="pre">v2,</span> <span class="pre">...</span></tt> packed according to the
+given format.  The arguments must match the values required by the format
+exactly.</dd></dl>
+
+<dl class="function">
+<dt id="struct.pack_into">
+<tt class="descclassname">struct.</tt><tt class="descname">pack_into</tt><big>(</big><em>fmt</em>, <em>buffer</em>, <em>offset</em>, <em>v1</em>, <em>v2</em>, <em>...</em><big>)</big><a class="headerlink" href="#struct.pack_into" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pack the values <tt class="docutils literal"><span class="pre">v1,</span> <span class="pre">v2,</span> <span class="pre">...</span></tt> according to the given format, write the packed
+bytes into the writable <em>buffer</em> starting at <em>offset</em>. Note that the offset is
+a required argument.</p>
+<p>
+<span class="versionmodified">New in version 2.5.</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="struct.unpack">
+<tt class="descclassname">struct.</tt><tt class="descname">unpack</tt><big>(</big><em>fmt</em>, <em>string</em><big>)</big><a class="headerlink" href="#struct.unpack" title="Permalink to this definition">¶</a></dt>
+<dd>Unpack the string (presumably packed by <tt class="docutils literal"><span class="pre">pack(fmt,</span> <span class="pre">...)</span></tt>) according to the
+given format.  The result is a tuple even if it contains exactly one item.  The
+string must contain exactly the amount of data required by the format
+(<tt class="docutils literal"><span class="pre">len(string)</span></tt> must equal <tt class="docutils literal"><span class="pre">calcsize(fmt)</span></tt>).</dd></dl>
+
+<dl class="function">
+<dt id="struct.unpack_from">
+<tt class="descclassname">struct.</tt><tt class="descname">unpack_from</tt><big>(</big><em>fmt</em>, <em>buffer</em><span class="optional">[</span>, <em>offset=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#struct.unpack_from" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpack the <em>buffer</em> according to tthe given format. The result is a tuple even
+if it contains exactly one item. The <em>buffer</em> must contain at least the amount
+of data required by the format (<tt class="docutils literal"><span class="pre">len(buffer[offset:])</span></tt> must be at least
+<tt class="docutils literal"><span class="pre">calcsize(fmt)</span></tt>).</p>
+<p>
+<span class="versionmodified">New in version 2.5.</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="struct.calcsize">
+<tt class="descclassname">struct.</tt><tt class="descname">calcsize</tt><big>(</big><em>fmt</em><big>)</big><a class="headerlink" href="#struct.calcsize" title="Permalink to this definition">¶</a></dt>
+<dd>Return the size of the struct (and hence of the string) corresponding to the
+given format.</dd></dl>
+
+<p>Format characters have the following meaning; the conversion between C and
+Python values should be obvious given their types:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="42%" />
+<col width="33%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Format</th>
+<th class="head">C Type</th>
+<th class="head">Python</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">x</span></tt></td>
+<td>pad byte</td>
+<td>no value</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">c</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">char</span></tt></td>
+<td>string of length 1</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">b</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">signed</span> <span class="pre">char</span></tt></td>
+<td>integer</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">B</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span></tt></td>
+<td>integer</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">?</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">_Bool</span></tt></td>
+<td>bool</td>
+<td>(1)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">h</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">short</span></tt></td>
+<td>integer</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">H</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">unsigned</span> <span class="pre">short</span></tt></td>
+<td>integer</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">i</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">int</span></tt></td>
+<td>integer</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">I</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">unsigned</span> <span class="pre">int</span></tt></td>
+<td>integer or long</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">l</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">long</span></tt></td>
+<td>integer</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">L</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span></tt></td>
+<td>long</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">q</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">long</span> <span class="pre">long</span></tt></td>
+<td>long</td>
+<td>(2)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">Q</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span>
+<span class="pre">long</span></tt></td>
+<td>long</td>
+<td>(2)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">f</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">float</span></tt></td>
+<td>float</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">d</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">double</span></tt></td>
+<td>float</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">s</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">char[]</span></tt></td>
+<td>string</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">p</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">char[]</span></tt></td>
+<td>string</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">P</span></tt></td>
+<td><tt class="xref docutils literal"><span class="pre">void</span> <span class="pre">*</span></tt></td>
+<td>long</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ol class="arabic">
+<li><p class="first">The <tt class="docutils literal"><span class="pre">'?'</span></tt> conversion code corresponds to the <tt class="xref docutils literal"><span class="pre">_Bool</span></tt> type defined by
+C99. If this type is not available, it is simulated using a <tt class="xref docutils literal"><span class="pre">char</span></tt>. In
+standard mode, it is always represented by one byte.</p>
+<p>
+<span class="versionmodified">New in version 2.6.</span></p>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">'q'</span></tt> and <tt class="docutils literal"><span class="pre">'Q'</span></tt> conversion codes are available in native mode only if
+the platform C compiler supports C <tt class="xref docutils literal"><span class="pre">long</span> <span class="pre">long</span></tt>, or, on Windows,
+<tt class="xref docutils literal"><span class="pre">__int64</span></tt>.  They are always available in standard modes.</p>
+<p>
+<span class="versionmodified">New in version 2.2.</span></p>
+</li>
+</ol>
+<p>A format character may be preceded by an integral repeat count.  For example,
+the format string <tt class="docutils literal"><span class="pre">'4h'</span></tt> means exactly the same as <tt class="docutils literal"><span class="pre">'hhhh'</span></tt>.</p>
+<p>Whitespace characters between formats are ignored; a count and its format must
+not contain whitespace though.</p>
+<p>For the <tt class="docutils literal"><span class="pre">'s'</span></tt> format character, the count is interpreted as the size of the
+string, not a repeat count like for the other format characters; for example,
+<tt class="docutils literal"><span class="pre">'10s'</span></tt> means a single 10-byte string, while <tt class="docutils literal"><span class="pre">'10c'</span></tt> means 10 characters.
+For packing, the string is truncated or padded with null bytes as appropriate to
+make it fit. For unpacking, the resulting string always has exactly the
+specified number of bytes.  As a special case, <tt class="docutils literal"><span class="pre">'0s'</span></tt> means a single, empty
+string (while <tt class="docutils literal"><span class="pre">'0c'</span></tt> means 0 characters).</p>
+<p>The <tt class="docutils literal"><span class="pre">'p'</span></tt> format character encodes a &#8220;Pascal string&#8221;, meaning a short
+variable-length string stored in a fixed number of bytes. The count is the total
+number of bytes stored.  The first byte stored is the length of the string, or
+255, whichever is smaller.  The bytes of the string follow.  If the string
+passed in to <a title="struct.pack" class="reference internal" href="#struct.pack"><tt class="xref docutils literal"><span class="pre">pack()</span></tt></a> is too long (longer than the count minus 1), only the
+leading count-1 bytes of the string are stored.  If the string is shorter than
+count-1, it is padded with null bytes so that exactly count bytes in all are
+used.  Note that for <a title="struct.unpack" class="reference internal" href="#struct.unpack"><tt class="xref docutils literal"><span class="pre">unpack()</span></tt></a>, the <tt class="docutils literal"><span class="pre">'p'</span></tt> format character consumes count
+bytes, but that the string returned can never contain more than 255 characters.</p>
+<p>For the <tt class="docutils literal"><span class="pre">'I'</span></tt>, <tt class="docutils literal"><span class="pre">'L'</span></tt>, <tt class="docutils literal"><span class="pre">'q'</span></tt> and <tt class="docutils literal"><span class="pre">'Q'</span></tt> format characters, the return
+value is a Python long integer.</p>
+<p>For the <tt class="docutils literal"><span class="pre">'P'</span></tt> format character, the return value is a Python integer or long
+integer, depending on the size needed to hold a pointer when it has been cast to
+an integer type.  A <em>NULL</em> pointer will always be returned as the Python integer
+<tt class="docutils literal"><span class="pre">0</span></tt>. When packing pointer-sized values, Python integer or long integer objects
+may be used.  For example, the Alpha and Merced processors use 64-bit pointer
+values, meaning a Python long integer will be used to hold the pointer; other
+platforms use 32-bit pointers and will use a Python integer.</p>
+<p>For the <tt class="docutils literal"><span class="pre">'?'</span></tt> format character, the return value is either <a title="True" class="reference external" href="constants.html#True"><tt class="xref xref docutils literal"><span class="pre">True</span></tt></a> or
+<a title="False" class="reference external" href="constants.html#False"><tt class="xref xref docutils literal"><span class="pre">False</span></tt></a>. When packing, the truth value of the argument object is used.
+Either 0 or 1 in the native or standard bool representation will be packed, and
+any non-zero value will be True when unpacking.</p>
+<p>By default, C numbers are represented in the machine&#8217;s native format and byte
+order, and properly aligned by skipping pad bytes if necessary (according to the
+rules used by the C compiler).</p>
+<p>Alternatively, the first character of the format string can be used to indicate
+the byte order, size and alignment of the packed data, according to the
+following table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="44%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Character</th>
+<th class="head">Byte order</th>
+<th class="head">Size and alignment</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">&#64;</span></tt></td>
+<td>native</td>
+<td>native</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">=</span></tt></td>
+<td>native</td>
+<td>standard</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">&lt;</span></tt></td>
+<td>little-endian</td>
+<td>standard</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">&gt;</span></tt></td>
+<td>big-endian</td>
+<td>standard</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">!</span></tt></td>
+<td>network (= big-endian)</td>
+<td>standard</td>
+</tr>
+</tbody>
+</table>
+<p>If the first character is not one of these, <tt class="docutils literal"><span class="pre">'&#64;'</span></tt> is assumed.</p>
+<p>Native byte order is big-endian or little-endian, depending on the host system.
+For example, Motorola and Sun processors are big-endian; Intel and DEC
+processors are little-endian.</p>
+<p>Native size and alignment are determined using the C compiler&#8217;s
+<tt class="docutils literal"><span class="pre">sizeof</span></tt> expression.  This is always combined with native byte order.</p>
+<p>Standard size and alignment are as follows: no alignment is required for any
+type (so you have to use pad bytes); <tt class="xref docutils literal"><span class="pre">short</span></tt> is 2 bytes; <tt class="xref docutils literal"><span class="pre">int</span></tt> and
+<tt class="xref docutils literal"><span class="pre">long</span></tt> are 4 bytes; <tt class="xref docutils literal"><span class="pre">long</span> <span class="pre">long</span></tt> (<tt class="xref docutils literal"><span class="pre">__int64</span></tt> on Windows) is 8
+bytes; <tt class="xref docutils literal"><span class="pre">float</span></tt> and <tt class="xref docutils literal"><span class="pre">double</span></tt> are 32-bit and 64-bit IEEE floating
+point numbers, respectively. <tt class="xref docutils literal"><span class="pre">_Bool</span></tt> is 1 byte.</p>
+<p>Note the difference between <tt class="docutils literal"><span class="pre">'&#64;'</span></tt> and <tt class="docutils literal"><span class="pre">'='</span></tt>: both use native byte order, but
+the size and alignment of the latter is standardized.</p>
+<p>The form <tt class="docutils literal"><span class="pre">'!'</span></tt> is available for those poor souls who claim they can&#8217;t remember
+whether network byte order is big-endian or little-endian.</p>
+<p>There is no way to indicate non-native byte order (force byte-swapping); use the
+appropriate choice of <tt class="docutils literal"><span class="pre">'&lt;'</span></tt> or <tt class="docutils literal"><span class="pre">'&gt;'</span></tt>.</p>
+<p>The <tt class="docutils literal"><span class="pre">'P'</span></tt> format character is only available for the native byte ordering
+(selected as the default or with the <tt class="docutils literal"><span class="pre">'&#64;'</span></tt> byte order character). The byte
+order character <tt class="docutils literal"><span class="pre">'='</span></tt> chooses to use little- or big-endian ordering based on
+the host system. The struct module does not interpret this as native ordering,
+so the <tt class="docutils literal"><span class="pre">'P'</span></tt> format is not available.</p>
+<p>Examples (all using native byte order, size and alignment, on a big-endian
+machine):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pack</span><span class="p">(</span><span class="s">&#39;hhl&#39;</span><span class="p">,</span> <span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">)</span>
+<span class="go">&#39;\x00\x01\x00\x02\x00\x00\x00\x03&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;hhl&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\x00\x01\x00\x02\x00\x00\x00\x03</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="go">(1, 2, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calcsize</span><span class="p">(</span><span class="s">&#39;hhl&#39;</span><span class="p">)</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+<p>Hint: to align the end of a structure to the alignment requirement of a
+particular type, end the format with the code for that type with a repeat count
+of zero.  For example, the format <tt class="docutils literal"><span class="pre">'llh0l'</span></tt> specifies two pad bytes at the
+end, assuming longs are aligned on 4-byte boundaries.  This only works when
+native size and alignment are in effect; standard size and alignment does not
+enforce any alignment.</p>
+<p>Unpacked fields can be named by assigning them to variables or by wrapping
+the result in a named tuple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">record</span> <span class="o">=</span> <span class="s">&#39;raymond   </span><span class="se">\x32\x12\x08\x01\x08</span><span class="s">&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">name</span><span class="p">,</span> <span class="n">serialnum</span><span class="p">,</span> <span class="n">school</span><span class="p">,</span> <span class="n">gradelevel</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="s">&#39;&lt;10sHHb&#39;</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Student</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Student&#39;</span><span class="p">,</span> <span class="s">&#39;name serialnum school gradelevel&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Student</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;&lt;10sHHb&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+<span class="go">Student(name=&#39;raymond   &#39;, serialnum=4658, school=264, gradelevel=8)</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Module <a title="Space efficient arrays of uniformly typed numeric values." class="reference external" href="array.html#module-array"><tt class="xref docutils literal"><span class="pre">array</span></tt></a></dt>
+<dd>Packed binary storage of homogeneous data.</dd>
+<dt>Module <a title="Encoders and decoders for the External Data Representation (XDR)." class="reference external" href="xdrlib.html#module-xdrlib"><tt class="xref docutils literal"><span class="pre">xdrlib</span></tt></a></dt>
+<dd>Packing and unpacking of XDR data.</dd>
+</dl>
+</div>
+<div class="section" id="struct-objects">
+<span id="id1"></span><h2>8.3.1. Struct Objects<a class="headerlink" href="#struct-objects" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref docutils literal"><span class="pre">struct</span></tt> module also defines the following type:</p>
+<dl class="class">
+<dt id="struct.Struct">
+<em class="property">
+class </em><tt class="descclassname">struct.</tt><tt class="descname">Struct</tt><big>(</big><em>format</em><big>)</big><a class="headerlink" href="#struct.Struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new Struct object which writes and reads binary data according to the
+format string <em>format</em>.  Creating a Struct object once and calling its methods
+is more efficient than calling the <tt class="xref docutils literal"><span class="pre">struct</span></tt> functions with the same format
+since the format string only needs to be compiled once.</p>
+<p>
+<span class="versionmodified">New in version 2.5.</span></p>
+<p>Compiled Struct objects support the following methods and attributes:</p>
+<dl class="method">
+<dt id="struct.Struct.pack">
+<tt class="descname">pack</tt><big>(</big><em>v1</em>, <em>v2</em>, <em>...</em><big>)</big><a class="headerlink" href="#struct.Struct.pack" title="Permalink to this definition">¶</a></dt>
+<dd>Identical to the <a title="struct.pack" class="reference internal" href="#struct.pack"><tt class="xref docutils literal"><span class="pre">pack()</span></tt></a> function, using the compiled format.
+(<tt class="docutils literal"><span class="pre">len(result)</span></tt> will equal <tt class="xref docutils literal"><span class="pre">self.size</span></tt>.)</dd></dl>
+
+<dl class="method">
+<dt id="struct.Struct.pack_into">
+<tt class="descname">pack_into</tt><big>(</big><em>buffer</em>, <em>offset</em>, <em>v1</em>, <em>v2</em>, <em>...</em><big>)</big><a class="headerlink" href="#struct.Struct.pack_into" title="Permalink to this definition">¶</a></dt>
+<dd>Identical to the <a title="struct.pack_into" class="reference internal" href="#struct.pack_into"><tt class="xref docutils literal"><span class="pre">pack_into()</span></tt></a> function, using the compiled format.</dd></dl>
+
+<dl class="method">
+<dt id="struct.Struct.unpack">
+<tt class="descname">unpack</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#struct.Struct.unpack" title="Permalink to this definition">¶</a></dt>
+<dd>Identical to the <a title="struct.unpack" class="reference internal" href="#struct.unpack"><tt class="xref docutils literal"><span class="pre">unpack()</span></tt></a> function, using the compiled format.
+(<tt class="docutils literal"><span class="pre">len(string)</span></tt> must equal <tt class="xref docutils literal"><span class="pre">self.size</span></tt>).</dd></dl>
+
+<dl class="method">
+<dt id="struct.Struct.unpack_from">
+<tt class="descname">unpack_from</tt><big>(</big><em>buffer</em><span class="optional">[</span>, <em>offset=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#struct.Struct.unpack_from" title="Permalink to this definition">¶</a></dt>
+<dd>Identical to the <a title="struct.unpack_from" class="reference internal" href="#struct.unpack_from"><tt class="xref docutils literal"><span class="pre">unpack_from()</span></tt></a> function, using the compiled format.
+(<tt class="docutils literal"><span class="pre">len(buffer[offset:])</span></tt> must be at least <tt class="xref docutils literal"><span class="pre">self.size</span></tt>).</dd></dl>
+
+<dl class="attribute">
+<dt id="struct.Struct.format">
+<tt class="descname">format</tt><a class="headerlink" href="#struct.Struct.format" title="Permalink to this definition">¶</a></dt>
+<dd>The format string used to construct this Struct object.</dd></dl>
+
+<dl class="attribute">
+<dt id="struct.Struct.size">
+<tt class="descname">size</tt><a class="headerlink" href="#struct.Struct.size" title="Permalink to this definition">¶</a></dt>
+<dd>The calculated size of the struct (and hence of the string) corresponding
+to <a title="format" class="reference external" href="functions.html#format"><tt class="xref docutils literal"><span class="pre">format</span></tt></a>.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">8.3. <tt class="docutils literal"><span class="pre">struct</span></tt> &#8212; Interpret strings as packed binary data</a><ul>
+<li><a class="reference external" href="#struct-objects">8.3.1. Struct Objects</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="re.html"
+                                  title="previous chapter">8.2. <tt class="docutils literal docutils literal docutils literal"><span class="pre">re</span></tt> &#8212; Regular expression operations</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="difflib.html"
+                                  title="next chapter">8.4. <tt class="docutils literal docutils literal docutils literal"><span class="pre">difflib</span></tt> &#8212; Helpers for computing deltas</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/library/struct.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="difflib.html" title="8.4. difflib — Helpers for computing deltas"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="re.html" title="8.2. re — Regular expression operations"
+             >previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="strings.html" >8. String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; <a href="../copyright.html">Copyright</a> 1990-2009, Python Software Foundation.
+      Last updated on Jul 23, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

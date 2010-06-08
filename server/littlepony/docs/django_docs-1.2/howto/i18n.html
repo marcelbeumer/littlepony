@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using internationalization in your own projects &mdash; Django v1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django v1.1 documentation" href="../index.html" />
+    <link rel="up" title="“How-to” guides" href="index.html" />
+    <link rel="next" title="Running Django on Jython" href="jython.html" />
+    <link rel="prev" title="Providing initial data for models" href="initial-data.html" />
+ 
+<script type="text/javascript" src="../templatebuiltins.js"></script>
+<script type="text/javascript">
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);
+</script>
+
+  </head>
+  <body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django v1.1 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="initial-data.html" title="Providing initial data for models">previous</a> 
+     |
+    <a href="index.html" title="&amp;#8220;How-to&amp;#8221; guides" accesskey="U">up</a>
+   |
+    <a href="jython.html" title="Running Django on Jython">next</a> &raquo;</div>
+    </div>
+    
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-i18n">
+            
+  <div class="section" id="s-using-internationalization-in-your-own-projects">
+<span id="s-using-translations-in-your-own-projects"></span><span id="s-howto-i18n"></span><span id="using-internationalization-in-your-own-projects"></span><span id="using-translations-in-your-own-projects"></span><span id="howto-i18n"></span><h1>Using internationalization in your own projects<a class="headerlink" href="#using-internationalization-in-your-own-projects" title="Permalink to this headline">¶</a></h1>
+<p>At runtime, Django looks for translations by following this algorithm:</p>
+<ul class="simple">
+<li>First, it looks for a <tt class="docutils literal"><span class="pre">locale</span></tt> directory in the application directory
+of the view that&#8217;s being called. If it finds a translation for the
+selected language, the translation will be installed.</li>
+<li>Next, it looks for a <tt class="docutils literal"><span class="pre">locale</span></tt> directory in the project directory. If it
+finds a translation, the translation will be installed.</li>
+<li>Finally, it checks the Django-provided base translation in
+<tt class="docutils literal"><span class="pre">django/conf/locale</span></tt>.</li>
+</ul>
+<p>In all cases the name of the directory containing the translation is expected to
+be named using <a class="reference external" href="../topics/i18n/index.html#term-locale-name"><em class="xref">locale name</em></a> notation. E.g. <tt class="docutils literal"><span class="pre">de</span></tt>, <tt class="docutils literal"><span class="pre">pt_BR</span></tt>, <tt class="docutils literal"><span class="pre">es_AR</span></tt>,
+etc.</p>
+<p>This way, you can write applications that include their own translations, and
+you can override base translations in your project path. Or, you can just build
+a big project out of several apps and put all translations into one big project
+message file. The choice is yours.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you&#8217;re using manually configured settings, as described in
+<a class="reference external" href="../topics/settings.html#settings-without-django-settings-module"><em>Using settings without setting DJANGO_SETTINGS_MODULE</em></a>, the <tt class="docutils literal"><span class="pre">locale</span></tt> directory in
+the project directory will not be examined, since Django loses the ability
+to work out the location of the project directory. (Django normally uses the
+location of the settings file to determine this, and a settings file doesn&#8217;t
+exist if you&#8217;re manually configuring your settings.)</p>
+</div>
+<p>All message file repositories are structured the same way. They are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">$APPPATH/locale/&lt;language&gt;/LC_MESSAGES/django.(po|mo)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">$PROJECTPATH/locale/&lt;language&gt;/LC_MESSAGES/django.(po|mo)</span></tt></li>
+<li>All paths listed in <tt class="docutils literal"><span class="pre">LOCALE_PATHS</span></tt> in your settings file are
+searched in that order for <tt class="docutils literal"><span class="pre">&lt;language&gt;/LC_MESSAGES/django.(po|mo)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">$PYTHONPATH/django/conf/locale/&lt;language&gt;/LC_MESSAGES/django.(po|mo)</span></tt></li>
+</ul>
+<p>To create message files, you use the <a class="reference external" href="../ref/django-admin.html#djadmin-makemessages"><tt class="xref docutils literal"><span class="pre">django-admin.py</span> <span class="pre">makemessages</span></tt></a>
+tool. You only need to be in the same directory where the <tt class="docutils literal"><span class="pre">locale/</span></tt> directory
+is located. And you use <a class="reference external" href="../ref/django-admin.html#djadmin-compilemessages"><tt class="xref docutils literal"><span class="pre">django-admin.py</span> <span class="pre">compilemessages</span></tt></a>
+to produce the binary <tt class="docutils literal"><span class="pre">.mo</span></tt> files that are used by <tt class="docutils literal"><span class="pre">gettext</span></tt>. Read the
+<a class="reference external" href="../topics/i18n/localization.html#topics-i18n-localization"><em>Localization</em></a> document for more details.</p>
+<p>You can also run <tt class="docutils literal"><span class="pre">django-admin.py</span> <span class="pre">compilemessages</span> <span class="pre">--settings=path.to.settings</span></tt>
+to make the compiler process all the directories in your <a class="reference external" href="../ref/settings.html#setting-LOCALE_PATHS"><tt class="xref docutils literal"><span class="pre">LOCALE_PATHS</span></tt></a>
+setting.</p>
+<p>Application message files are a bit complicated to discover &#8211; they need the
+<tt class="xref docutils literal"><span class="pre">LocaleMiddleware</span></tt>. If you don&#8217;t use the
+middleware, only the Django message files and project message files will be
+installed and available at runtime.</p>
+<p>Finally, you should give some thought to the structure of your translation
+files. If your applications need to be delivered to other users and will
+be used in other projects, you might want to use app-specific translations.
+But using app-specific translations and project translations could produce
+weird problems with <tt class="docutils literal"><span class="pre">makemessages</span></tt>: It will traverse all directories below
+the current path and so might put message IDs into the project message file
+that are already in application message files.</p>
+<p>The easiest way out is to store applications that are not part of the project
+(and so carry their own translations) outside the project tree. That way,
+<tt class="docutils literal"><span class="pre">django-admin.py</span> <span class="pre">makemessages</span></tt> on the project level will only translate
+strings that are connected to your explicit project and not strings that are
+distributed independently.</p>
+<div class="section" id="s-using-translations-outside-views-and-templates">
+<span id="using-translations-outside-views-and-templates"></span><h2>Using translations outside views and templates<a class="headerlink" href="#using-translations-outside-views-and-templates" title="Permalink to this headline">¶</a></h2>
+<p>While Django provides a rich set of i18n tools for use in views and templates,
+it does not restrict the usage to Django-specific code. The Django translation
+mechanisms can be used to translate arbitrary texts to any language that is
+supported by Django (as long as an appropriate translation catalog exists, of
+course). You can load a translation catalog, activate it and translate text to
+language of your choice, but remember to switch back to original language, as
+activating a translation catalog is done on per-thread basis and such change
+will affect code running in the same thread.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">translation</span>
+<span class="k">def</span> <span class="nf">welcome_translated</span><span class="p">(</span><span class="n">language</span><span class="p">):</span>
+    <span class="n">cur_language</span> <span class="o">=</span> <span class="n">translation</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">translation</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">translation</span><span class="o">.</span><span class="n">ugettext</span><span class="p">(</span><span class="s">&#39;welcome&#39;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">translation</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">cur_language</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+</div>
+<p>Calling this function with the value 'de' will give you <tt class="docutils literal"><span class="pre">&quot;Willkommen&quot;</span></tt>,
+regardless of <a class="reference external" href="../ref/settings.html#setting-LANGUAGE_CODE"><tt class="xref docutils literal"><span class="pre">LANGUAGE_CODE</span></tt></a> and language set by middleware.</p>
+<p>Functions of particular interest are <tt class="docutils literal"><span class="pre">django.utils.translation.get_language()</span></tt>
+which returns the language used in the current thread,
+<tt class="docutils literal"><span class="pre">django.utils.translation.activate()</span></tt> which activates a translation catalog
+for the current thread, and <tt class="docutils literal"><span class="pre">django.utils.translation.check_for_language()</span></tt>
+which checks if the given language is supported by Django.</p>
+</div>
+</div>
+
+
+          </div>         
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Using internationalization in your own projects</a><ul>
+<li><a class="reference external" href="#using-translations-outside-views-and-templates">Using translations outside views and templates</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>Browse</h3>
+  <ul>
+    
+      <li>Prev: <a href="initial-data.html">Providing initial data for models</a></li>
+    
+    
+      <li>Next: <a href="jython.html">Running Django on Jython</a></li>
+    
+  </ul>
+  <h3>You are here:</h3>
+  <ul>
+      <li>
+        <a href="../index.html">Django v1.1 documentation</a>
+        
+          <ul><li><a href="index.html">&#8220;How-to&#8221; guides</a>
+        
+        <ul><li>Using internationalization in your own projects</li></ul>
+        </li></ul>
+      </li>
+  </ul>  
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/howto/i18n.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">May 21, 2010</p>
+          </div> 
+        
+      
+    </div>
+    
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="initial-data.html" title="Providing initial data for models">previous</a> 
+     |
+    <a href="index.html" title="&amp;#8220;How-to&amp;#8221; guides" accesskey="U">up</a>
+   |
+    <a href="jython.html" title="Running Django on Jython">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

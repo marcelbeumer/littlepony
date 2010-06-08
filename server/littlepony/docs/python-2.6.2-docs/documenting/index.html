@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documenting Python &mdash; Python v2.6.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Python v2.6.2 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python v2.6.2 documentation" href="../index.html" />
+    <link rel="next" title="1. Introduction" href="intro.html" />
+    <link rel="prev" title="Installing Python Modules" href="../install/index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="1. Introduction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../install/index.html" title="Installing Python Modules"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="documenting-python">
+<span id="documenting-index"></span><h1>Documenting Python<a class="headerlink" href="#documenting-python" title="Permalink to this headline">¶</a></h1>
+<p>The Python language has a substantial body of documentation, much of it
+contributed by various authors. The markup used for the Python documentation is
+<a class="reference external" href="http://docutils.sf.net/rst.html">reStructuredText</a>, developed by the <a class="reference external" href="http://docutils.sf.net/">docutils</a> project, amended by custom
+directives and using a toolset named <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> to postprocess the HTML output.</p>
+<p>This document describes the style guide for our documentation, the custom
+reStructuredText markup introduced to support Python documentation and how it
+should be used, as well as the Sphinx build system.</p>
+<p>If you&#8217;re interested in contributing to Python&#8217;s documentation, there&#8217;s no need
+to write reStructuredText if you&#8217;re not so inclined; plain text contributions
+are more than welcome as well.</p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="intro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="style.html">2. Style Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="rest.html">3. reStructuredText Primer</a><ul>
+<li class="toctree-l2"><a class="reference external" href="rest.html#paragraphs">3.1. Paragraphs</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#inline-markup">3.2. Inline markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#lists-and-quotes">3.3. Lists and Quotes</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#source-code">3.4. Source Code</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#hyperlinks">3.5. Hyperlinks</a><ul>
+<li class="toctree-l3"><a class="reference external" href="rest.html#external-links">3.5.1. External links</a></li>
+<li class="toctree-l3"><a class="reference external" href="rest.html#internal-links">3.5.2. Internal links</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#sections">3.6. Sections</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#explicit-markup">3.7. Explicit Markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#directives">3.8. Directives</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#footnotes">3.9. Footnotes</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#comments">3.10. Comments</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#source-encoding">3.11. Source encoding</a></li>
+<li class="toctree-l2"><a class="reference external" href="rest.html#gotchas">3.12. Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="markup.html">4. Additional Markup Constructs</a><ul>
+<li class="toctree-l2"><a class="reference external" href="markup.html#meta-information-markup">4.1. Meta-information markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#module-specific-markup">4.2. Module-specific markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#information-units">4.3. Information units</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#showing-code-examples">4.4. Showing code examples</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#inline-markup">4.5. Inline markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#cross-linking-markup">4.6. Cross-linking markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#paragraph-level-markup">4.7. Paragraph-level markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#table-of-contents-markup">4.8. Table-of-contents markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#index-generating-markup">4.9. Index-generating markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#grammar-production-displays">4.10. Grammar production displays</a></li>
+<li class="toctree-l2"><a class="reference external" href="markup.html#substitutions">4.11. Substitutions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="fromlatex.html">5. Differences to the LaTeX markup</a><ul>
+<li class="toctree-l2"><a class="reference external" href="fromlatex.html#inline-markup">5.1. Inline markup</a></li>
+<li class="toctree-l2"><a class="reference external" href="fromlatex.html#information-units">5.2. Information units</a></li>
+<li class="toctree-l2"><a class="reference external" href="fromlatex.html#structure">5.3. Structure</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../install/index.html"
+                                  title="previous chapter">Installing Python Modules</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="intro.html"
+                                  title="next chapter">1. Introduction</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/documenting/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="1. Introduction"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../install/index.html" title="Installing Python Modules"
+             >previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; <a href="../copyright.html">Copyright</a> 1990-2009, Python Software Foundation.
+      Last updated on Jul 23, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

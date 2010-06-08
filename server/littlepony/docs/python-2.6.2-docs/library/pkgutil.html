@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>31.4. pkgutil — Package extension utility &mdash; Python v2.6.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Python v2.6.2 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python v2.6.2 documentation" href="../index.html" />
+    <link rel="up" title="31. Importing Modules" href="modules.html" />
+    <link rel="next" title="31.5. modulefinder — Find modules used by a script" href="modulefinder.html" />
+    <link rel="prev" title="31.3. zipimport — Import modules from Zip archives" href="zipimport.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="modulefinder.html" title="31.5. modulefinder — Find modules used by a script"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="zipimport.html" title="31.3. zipimport — Import modules from Zip archives"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="modules.html" accesskey="U">31. Importing Modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pkgutil">
+<h1>31.4. <tt class="xref docutils literal"><span class="pre">pkgutil</span></tt> &#8212; Package extension utility<a class="headerlink" href="#module-pkgutil" title="Permalink to this headline">¶</a></h1>
+<p>
+<span class="versionmodified">New in version 2.3.</span></p>
+<p>This module provides functions to manipulate packages:</p>
+<dl class="function">
+<dt id="pkgutil.extend_path">
+<tt class="descclassname">pkgutil.</tt><tt class="descname">extend_path</tt><big>(</big><em>path</em>, <em>name</em><big>)</big><a class="headerlink" href="#pkgutil.extend_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extend the search path for the modules which comprise a package. Intended use is
+to place the following code in a package&#8217;s <tt class="docutils literal"><span class="pre">__init__.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pkgutil</span> <span class="kn">import</span> <span class="n">extend_path</span>
+<span class="n">__path__</span> <span class="o">=</span> <span class="n">extend_path</span><span class="p">(</span><span class="n">__path__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will add to the package&#8217;s <tt class="docutils literal"><span class="pre">__path__</span></tt> all subdirectories of directories on
+<tt class="docutils literal"><span class="pre">sys.path</span></tt> named after the package.  This is useful if one wants to distribute
+different parts of a single logical package as multiple directories.</p>
+<p>It also looks for <tt class="docutils literal"><span class="pre">*.pkg</span></tt> files beginning where <tt class="docutils literal"><span class="pre">*</span></tt> matches the <em>name</em>
+argument.  This feature is similar to <tt class="docutils literal"><span class="pre">*.pth</span></tt> files (see the <a title="A standard way to reference site-specific modules." class="reference external" href="site.html#module-site"><tt class="xref docutils literal"><span class="pre">site</span></tt></a>
+module for more information), except that it doesn&#8217;t special-case lines starting
+with <tt class="docutils literal"><span class="pre">import</span></tt>.  A <tt class="docutils literal"><span class="pre">*.pkg</span></tt> file is trusted at face value: apart from
+checking for duplicates, all entries found in a <tt class="docutils literal"><span class="pre">*.pkg</span></tt> file are added to
+the path, regardless of whether they exist on the filesystem.  (This is a
+feature.)</p>
+<p>If the input path is not a list (as is the case for frozen packages) it is
+returned unchanged.  The input path is not modified; an extended copy is
+returned.  Items are only appended to the copy at the end.</p>
+<p>It is assumed that <tt class="docutils literal"><span class="pre">sys.path</span></tt> is a sequence.  Items of <tt class="docutils literal"><span class="pre">sys.path</span></tt> that are
+not (Unicode or 8-bit) strings referring to existing directories are ignored.
+Unicode items on <tt class="docutils literal"><span class="pre">sys.path</span></tt> that cause errors when used as filenames may cause
+this function to raise an exception (in line with <a title="os.path.isdir" class="reference external" href="os.path.html#os.path.isdir"><tt class="xref docutils literal"><span class="pre">os.path.isdir()</span></tt></a>
+behavior).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pkgutil.get_data">
+<tt class="descclassname">pkgutil.</tt><tt class="descname">get_data</tt><big>(</big><em>package</em>, <em>resource</em><big>)</big><a class="headerlink" href="#pkgutil.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a resource from a package.</p>
+<p>This is a wrapper for the PEP 302 loader <a title="pkgutil.get_data" class="reference internal" href="#pkgutil.get_data"><tt class="xref docutils literal"><span class="pre">get_data()</span></tt></a> API. The package
+argument should be the name of a package, in standard module format
+(foo.bar). The resource argument should be in the form of a relative
+filename, using <tt class="docutils literal"><span class="pre">/</span></tt> as the path separator. The parent directory name
+<tt class="docutils literal"><span class="pre">..</span></tt> is not allowed, and nor is a rooted name (starting with a <tt class="docutils literal"><span class="pre">/</span></tt>).</p>
+<p>The function returns a binary string that is the contents of the
+specified resource.</p>
+<p>For packages located in the filesystem, which have already been imported,
+this is the rough equivalent of:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">package</span><span class="p">]</span><span class="o">.</span><span class="n">__file__</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">resource</span><span class="p">),</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If the package cannot be located or loaded, or it uses a PEP 302 loader
+which does not support <a title="pkgutil.get_data" class="reference internal" href="#pkgutil.get_data"><tt class="xref docutils literal"><span class="pre">get_data()</span></tt></a>, then None is returned.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="zipimport.html"
+                                  title="previous chapter">31.3. <tt class="docutils literal docutils literal"><span class="pre">zipimport</span></tt> &#8212; Import modules from Zip archives</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="modulefinder.html"
+                                  title="next chapter">31.5. <tt class="docutils literal docutils literal"><span class="pre">modulefinder</span></tt> &#8212; Find modules used by a script</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/library/pkgutil.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modulefinder.html" title="31.5. modulefinder — Find modules used by a script"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="zipimport.html" title="31.3. zipimport — Import modules from Zip archives"
+             >previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="modules.html" >31. Importing Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; <a href="../copyright.html">Copyright</a> 1990-2009, Python Software Foundation.
+      Last updated on Jul 23, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

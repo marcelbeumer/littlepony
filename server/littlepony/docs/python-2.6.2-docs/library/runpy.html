@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>31.6. runpy — Locating and executing Python modules &mdash; Python v2.6.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Python v2.6.2 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python v2.6.2 documentation" href="../index.html" />
+    <link rel="up" title="31. Importing Modules" href="modules.html" />
+    <link rel="next" title="32. Python Language Services" href="language.html" />
+    <link rel="prev" title="31.5. modulefinder — Find modules used by a script" href="modulefinder.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="language.html" title="32. Python Language Services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modulefinder.html" title="31.5. modulefinder — Find modules used by a script"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="modules.html" accesskey="U">31. Importing Modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-runpy">
+<h1>31.6. <tt class="xref docutils literal"><span class="pre">runpy</span></tt> &#8212; Locating and executing Python modules<a class="headerlink" href="#module-runpy" title="Permalink to this headline">¶</a></h1>
+<p>
+<span class="versionmodified">New in version 2.5.</span></p>
+<p>The <tt class="xref docutils literal"><span class="pre">runpy</span></tt> module is used to locate and run Python modules without
+importing them first. Its main use is to implement the <a class="reference external" href="../using/cmdline.html#cmdoption-m"><em class="xref">-m</em></a> command line
+switch that allows scripts to be located using the Python module namespace
+rather than the filesystem.</p>
+<p>When executed as a script, the module effectively operates as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>  <span class="c"># Remove the runpy module from the arguments</span>
+<span class="n">run_module</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span> <span class="n">run_name</span><span class="o">=</span><span class="s">&quot;__main__&quot;</span><span class="p">,</span> <span class="n">alter_sys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="xref docutils literal"><span class="pre">runpy</span></tt> module provides a single function:</p>
+<dl class="function">
+<dt id="runpy.run_module">
+<tt class="descclassname">runpy.</tt><tt class="descname">run_module</tt><big>(</big><em>mod_name</em><span class="optional">[</span>, <em>init_globals</em><span class="optional">]</span><span class="optional">[</span>, <em>run_name</em><span class="optional">]</span><span class="optional">[</span>, <em>alter_sys</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#runpy.run_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the code of the specified module and return the resulting module globals
+dictionary. The module&#8217;s code is first located using the standard import
+mechanism (refer to PEP 302 for details) and then executed in a fresh module
+namespace.</p>
+<p>The optional dictionary argument <em>init_globals</em> may be used to pre-populate the
+globals dictionary before the code is executed. The supplied dictionary will not
+be modified. If any of the special global variables below are defined in the
+supplied dictionary, those definitions are overridden by the <tt class="docutils literal"><span class="pre">run_module</span></tt>
+function.</p>
+<p>The special global variables <tt class="docutils literal"><span class="pre">__name__</span></tt>, <tt class="docutils literal"><span class="pre">__file__</span></tt>, <tt class="docutils literal"><span class="pre">__loader__</span></tt> and
+<tt class="docutils literal"><span class="pre">__builtins__</span></tt> are set in the globals dictionary before the module code is
+executed.</p>
+<p><tt class="docutils literal"><span class="pre">__name__</span></tt> is set to <em>run_name</em> if this optional argument is supplied, and the
+<em>mod_name</em> argument otherwise.</p>
+<p><tt class="docutils literal"><span class="pre">__loader__</span></tt> is set to the PEP 302 module loader used to retrieve the code for
+the module (This loader may be a wrapper around the standard import mechanism).</p>
+<p><tt class="docutils literal"><span class="pre">__file__</span></tt> is set to the name provided by the module loader. If the loader
+does not make filename information available, this variable is set to <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">__builtins__</span></tt> is automatically initialised with a reference to the top level
+namespace of the <a title="The module that provides the built-in namespace." class="reference external" href="__builtin__.html#module-__builtin__"><tt class="xref docutils literal"><span class="pre">__builtin__</span></tt></a> module.</p>
+<p>If the argument <em>alter_sys</em> is supplied and evaluates to <tt class="xref docutils literal"><span class="pre">True</span></tt>, then
+<tt class="docutils literal"><span class="pre">sys.argv[0]</span></tt> is updated with the value of <tt class="docutils literal"><span class="pre">__file__</span></tt> and
+<tt class="docutils literal"><span class="pre">sys.modules[__name__]</span></tt> is updated with a temporary module object for the
+module being executed. Both <tt class="docutils literal"><span class="pre">sys.argv[0]</span></tt> and <tt class="docutils literal"><span class="pre">sys.modules[__name__]</span></tt>
+are restored to their original values before the function returns.</p>
+<p>Note that this manipulation of <a title="Access system-specific parameters and functions." class="reference external" href="sys.html#module-sys"><tt class="xref docutils literal"><span class="pre">sys</span></tt></a> is not thread-safe. Other threads may
+see the partially initialised module, as well as the altered list of arguments.
+It is recommended that the <a title="Access system-specific parameters and functions." class="reference external" href="sys.html#module-sys"><tt class="xref docutils literal"><span class="pre">sys</span></tt></a> module be left alone when invoking this
+function from threaded code.</p>
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><span class="target" id="index-519"></span><a class="reference external" href="http://www.python.org/dev/peps/pep-0338"><strong>PEP 338</strong></a> - Executing modules as scripts</dt>
+<dd>PEP written and  implemented by Nick Coghlan.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="modulefinder.html"
+                                  title="previous chapter">31.5. <tt class="docutils literal docutils literal docutils literal"><span class="pre">modulefinder</span></tt> &#8212; Find modules used by a script</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="language.html"
+                                  title="next chapter">32. Python Language Services</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/library/runpy.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="language.html" title="32. Python Language Services"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modulefinder.html" title="31.5. modulefinder — Find modules used by a script"
+             >previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="modules.html" >31. Importing Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; <a href="../copyright.html">Copyright</a> 1990-2009, Python Software Foundation.
+      Last updated on Jul 23, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

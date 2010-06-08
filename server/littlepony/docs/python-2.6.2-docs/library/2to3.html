@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>26.4. 2to3 - Automated Python 2 to 3 code translation &mdash; Python v2.6.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Python v2.6.2 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python v2.6.2 documentation" href="../index.html" />
+    <link rel="up" title="26. Development Tools" href="development.html" />
+    <link rel="next" title="26.5. test — Regression tests package for Python" href="test.html" />
+    <link rel="prev" title="26.3. unittest — Unit testing framework" href="unittest.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="test.html" title="26.5. test — Regression tests package for Python"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="unittest.html" title="26.3. unittest — Unit testing framework"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="development.html" accesskey="U">26. Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="to3-automated-python-2-to-3-code-translation">
+<span id="to3-reference"></span><h1>26.4. 2to3 - Automated Python 2 to 3 code translation<a class="headerlink" href="#to3-automated-python-2-to-3-code-translation" title="Permalink to this headline">¶</a></h1>
+<p>2to3 is a Python program that reads Python 2.x source code and applies a series
+of <em>fixers</em> to transform it into valid Python 3.x code.  The standard library
+contains a rich set of fixers that will handle almost all code.  2to3 supporting
+library <tt class="xref docutils literal"><span class="pre">lib2to3</span></tt> is, however, a flexible and generic library, so it is
+possible to write your own fixers for 2to3.  <tt class="xref docutils literal"><span class="pre">lib2to3</span></tt> could also be
+adapted to custom applications in which Python code needs to be edited
+automatically.</p>
+<div class="section" id="using-2to3">
+<h2>26.4.1. Using 2to3<a class="headerlink" href="#using-2to3" title="Permalink to this headline">¶</a></h2>
+<p>2to3 will usually be installed with the Python interpreter as a script.  It is
+also located in the <tt class="docutils literal"><span class="pre">Tools/scripts</span></tt> directory of the Python root.</p>
+<p>2to3&#8217;s basic arguments are a list of files or directories to transform.  The
+directories are to recursively traversed for Python sources.</p>
+<p>Here is a sample Python 2.x source file, <tt class="docutils literal"><span class="pre">example.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Hello, {0}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;What&#39;s your name?&quot;</span>
+<span class="n">name</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">()</span>
+<span class="n">greet</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It can be converted to Python 3.x code via 2to3 on the command line:</p>
+<div class="highlight-python"><pre>$ 2to3 example.py</pre>
+</div>
+<p>A diff against the original source file is printed.  2to3 can also write the
+needed modifications right back to the source file.  (A backup of the original
+file is made unless <em class="xref">-n</em> is also given.)  Writing the changes back is
+enabled with the <em class="xref">-w</em> flag:</p>
+<div class="highlight-python"><pre>$ 2to3 -w example.py</pre>
+</div>
+<p>After transformation, <tt class="docutils literal"><span class="pre">example.py</span></tt> looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Hello, {0}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;What&#39;s your name?&quot;</span><span class="p">)</span>
+<span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+<span class="n">greet</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Comments and exact indentation are preserved throughout the translation process.</p>
+<p>By default, 2to3 runs a set of predefined fixers.  The <em class="xref">-l</em> flag lists
+all available fixers.  An explicit set of fixers to run can be given with
+<em class="xref">-f</em>.  Likewise the <a class="reference external" href="../using/cmdline.html#cmdoption-x"><em class="xref">-x</em></a> explicitly disables a fixer.  The
+following example runs only the <tt class="docutils literal"><span class="pre">imports</span></tt> and <tt class="docutils literal"><span class="pre">has_key</span></tt> fixers:</p>
+<div class="highlight-python"><pre>$ 2to3 -f imports -f has_key example.py</pre>
+</div>
+<p>This command runs every fixer except the <tt class="docutils literal"><span class="pre">apply</span></tt> fixer:</p>
+<div class="highlight-python"><pre>$ 2to3 -x apply example.py</pre>
+</div>
+<p>Some fixers are <em>explicit</em>, meaning they aren&#8217;t run by default and must be
+listed on the command line to be run.  Here, in addition to the default fixers,
+the <tt class="docutils literal"><span class="pre">idioms</span></tt> fixer is run:</p>
+<div class="highlight-python"><pre>$ 2to3 -f all -f idioms example.py</pre>
+</div>
+<p>Notice how passing <tt class="docutils literal"><span class="pre">all</span></tt> enables all default fixers.</p>
+<p>Sometimes 2to3 will find a place in your source code that needs to be changed,
+but 2to3 cannot fix automatically.  In this case, 2to3 will print a warning
+beneath the diff for a file.  You should address the warning in order to have
+compliant 3.x code.</p>
+<p>2to3 can also refactor doctests.  To enable this mode, use the <a class="reference external" href="../using/cmdline.html#cmdoption-d"><em class="xref">-d</em></a>
+flag.  Note that <em>only</em> doctests will be refactored.  This also doesn&#8217;t require
+the module to be valid Python.  For example, doctest like examples in a reST
+document could also be refactored with this option.</p>
+<p>The <a class="reference external" href="../using/cmdline.html#cmdoption-v"><em class="xref">-v</em></a> option enables output of more information on the translation
+process.</p>
+</div>
+<div class="section" id="module-lib2to3">
+<h2>26.4.2. <tt class="xref docutils literal"><span class="pre">lib2to3</span></tt> - 2to3&#8217;s library<a class="headerlink" href="#module-lib2to3" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="xref docutils literal"><span class="pre">lib2to3</span></tt> API should be considered unstable and may change
+drastically in the future.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">26.4. 2to3 - Automated Python 2 to 3 code translation</a><ul>
+<li><a class="reference external" href="#using-2to3">26.4.1. Using 2to3</a></li>
+<li><a class="reference external" href="#module-lib2to3">26.4.2. <tt class="docutils literal"><span class="pre">lib2to3</span></tt> - 2to3&#8217;s library</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="unittest.html"
+                                  title="previous chapter">26.3. <tt class="docutils literal"><span class="pre">unittest</span></tt> &#8212; Unit testing framework</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="test.html"
+                                  title="next chapter">26.5. <tt class="docutils literal"><span class="pre">test</span></tt> &#8212; Regression tests package for Python</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/library/2to3.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="test.html" title="26.5. test — Regression tests package for Python"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="unittest.html" title="26.3. unittest — Unit testing framework"
+             >previous</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Python v2.6.2 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="development.html" >26. Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; <a href="../copyright.html">Copyright</a> 1990-2009, Python Software Foundation.
+      Last updated on Jul 23, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>
