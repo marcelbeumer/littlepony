@@ -1,0 +1,45 @@
+= little pony =
+
+Standalone frontend development kit based on Python and Django. No install, no configuration, yet all the power of a real back end.
+
+And no, you don't need to know Python or Django (*). But if you, do you can customize it as you like, as little pony is just a smartly configured Django app with some additional libraries and wrappers.
+
+== For whom ==
+
+*: Little pony is still very alpha, so don't expect miracles! If you are new to Python and Django, it might be best to wait for the beta.
+
+Little pony is made for frontend developers that want to work standalone, but feel the need for their own solid yet simple development environment.
+
+Little pony does will not require specific knowledge but it works best if the frontend developer is not afraid of the command line or modifying a line of Python.
+
+== Templating ==
+
+Django uses the Django Templating Language.
+
+DTL is a simple, yet powerful template system featuring template inheritance, custom tags and filters, URL mapping and much more.
+
+Little pony adds a bit of sugar, by providing simple wrappers for common tasks.
+
+== Integration ==
+
+Currently:
+
+If your frontend job requires you to deliver static HTML templates, generate a static export of your templates with a single command.
+
+In the future:
+
+In case you need to integrate with a Django backend, life has never been so easy. Develop your templates within little pony, and have Django developers use your templates as is. Little pony adds some sugar to support this workflow with handy utilities and wrappers.
+
+Do you want to get your hands dirty and generate XSLT, ASP, JSP or any other template language based on your templates, then you can get into the Django template parser and do some magic there.
+
+== Getting started ==
+
+Make sure you are working on Linux or Mac. Windows support might come later.
+
+Make sure you have python (>=2.5) installed. Type 'python' on your command line to check.
+
+Download little pony and put it anywhere on your hard drive.
+
+On the command line, go to the 'server' directory and type './run_littlepony.sh' to start the server.
+
+Go to http://localhost:8000 to get started.
